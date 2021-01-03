@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 import os,sys
-sg.theme('DarkAmber')
+sg.theme('DarkGrey')
 raw_package_list=[]
 package_names=[]
 #layout = [[sg.Text('rodder packages')], [sg.InputText(), sg.Button('Search')]]
@@ -13,7 +13,7 @@ for i in tmp:
             for line in f:
                 raw_package_list.append(line.strip() + ';' + i.split('.')[0])
 for i in raw_package_list:
-    layout.append([sg.Text(i), sg.Button('Install ' + i.split(';')[0])])
+    layout.append([sg.Text(i), sg.Button('Install ' + i.split(';')[0]), sg.Button('Remove ' + i.split(';')[0])])
     package_names.append(i.split(';')[0])
 # Create the Window
 window = sg.Window('rodder-gui', layout)
@@ -31,5 +31,20 @@ while True:
             print("User wants to " + str(event))
             rodder_file = open(os.getenv('HOME') + '/.local/rodder/rodder').read()
             sys.argv = ['rodder', 'install', i]
-            exec(rodder_file)
+            try:
+                exec(rodder_file)
+            except Exception as e:
+                sg.popup('Installation failed!\n' + str(e))
+                break
+            sg.popup('Installation successful!')
+        if event == 'Remove ' + i:
+            print("User wants to " + str(event))
+            rodder_file = open(os.getenv('HOME') + '/.local/rodder/rodder').read()
+            sys.argv = ['rodder', 'remove', i]
+            try:
+                exec(rodder_file)
+            except Exception as e:
+                sg.popup('Removal failed!\n' + str(e))
+                break
+            sg.popup('Removal successful!')
 window.close()
