@@ -13,7 +13,7 @@ for i in tmp:
             for line in f:
                 raw_package_list.append(line.strip() + ';' + i.split('.')[0])
 for i in raw_package_list:
-    layout.append([sg.Text(i), sg.Button('Install ' + i.split(';')[0]), sg.Button('Remove ' + i.split(';')[0])])
+    layout.append([sg.Text(i.split(';')[0]), sg.Button('Install ' + i.split(';')[0]), sg.Button('Remove ' + i.split(';')[0])])
     package_names.append(i.split(';')[0])
 # Create the Window
 window = sg.Window('rodder-gui', layout)
