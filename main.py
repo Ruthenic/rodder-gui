@@ -5,7 +5,7 @@ raw_package_list=[]
 package_names=[]
 #layout = [[sg.Text('rodder packages')], [sg.InputText(), sg.Button('Search')]]
 #line above has search, uncomment when i feel like adding it
-layout = [[sg.Text('rodder packages')]]
+#layout = [[sg.Text('rodder packages')]] #why did i even put this here
 tmp = os.listdir(os.getenv('HOME') + '/.config/rodder/repos/')
 for i in tmp:
     if os.path.isdir(os.getenv('HOME') + '/.config/rodder/repos/' + i) == False and i != 'master-repo-list.txt':
@@ -39,7 +39,7 @@ while True:
             sg.popup('Installation successful!')
         if event == 'Remove ' + i:
             print("User wants to " + str(event))
-            rodder_file = open(os.getenv('HOME') + '/.local/rodder/rodder').read()
+            rodder_file = open(os.getenv('HOME') + '/.local/rodder/rodder').read() #I really need to make rodder a lib, and the cmd tool just be a wrapper around it so i don't have to do *THIS*
             sys.argv = ['rodder', 'remove', i]
             try:
                 exec(rodder_file)
